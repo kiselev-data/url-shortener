@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Short your URL:</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 </head>
+
 <body>
-$END$
+
+
+<form action="/api/v1/urls" id="searchForm">
+    <input type="text" name="longUrl" placeholder="Search..." value="aaa"/>
+    <input type="submit" value="Search">
+</form>
+<!-- the result of the search will be rendered inside this div -->
+<div id="result"></div>
+
+<script>
+
+
+$(function() {
+$('#searchForm').submit(function(event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+
+    value = $(this).find( "input[name='longUrl']" ).val();
+    submit_url = $(this).attr( "action" );
+
+
+    // Send the data using post
+    $.ajax({
+            type: 'post',
+            url: submit_url,
+            data: JSON.stringify({longUrl: value}),
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            success: function (data) {
+                var shortUrl = data.shortUrl;
+                $( "#result" ).empty().append( shortUrl );
+            }
+        });
+});
+});
+
+</script>
+
 </body>
 </html>
