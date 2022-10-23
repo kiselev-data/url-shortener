@@ -7,7 +7,10 @@ import lombok.*;
 @ToString
 @Getter
 @Setter
-public class Url {
-    private String longUrl;
-    private String shortUrl;
+
+public class Simple {
+
+    private String a;
+
 }
+
