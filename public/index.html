@@ -8,13 +8,15 @@
 
 <body>
 
-
+<h1>URL Shortener Service</h1>
+<h2>Enter your URL:</h2>
 <form action="/api/v1/urls" id="searchForm">
-    <input type="text" name="longUrl" placeholder="Search..." value="aaa"/>
-    <input type="submit" value="Search">
+    <input type="text" name="longUrl" placeholder="Enter your URL..."/>
+    <input type="submit" value="Convert">
 </form>
+<br>
 <!-- the result of the search will be rendered inside this div -->
-<div id="result"></div>
+<div id="result"> <a id="link_result"></a></div>
 
 <script>
 
@@ -38,7 +40,10 @@ $('#searchForm').submit(function(event) {
             traditional: true,
             success: function (data) {
                 var shortUrl = data.shortUrl;
-                $( "#result" ).empty().append( shortUrl );
+                var origin   = window.location.origin;
+                var resultUrl = origin + submit_url + "/" + shortUrl;
+                $( "#link_result" ).empty().append( resultUrl );
+                $( "#link_result" ).attr("href", resultUrl );
             }
         });
 });
