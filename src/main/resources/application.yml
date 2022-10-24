@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: url-shortener
+  spring:
+    datasource:
+      url: jdbc:h2:mem:test # for a better simple solution store into file
+      username: sa
+      password:
+      driverClassName: org.h2.Driver
+    jpa:
+      spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+    settings:
+      trace: false
+      web-allow-others: false
+
+
+#spring.jpa.hibernate.ddl-auto=validate
+# To improve:
+## liquibase for better rollout of tables
+## configs to distinguish between stages: local, tests, prod
+## h2 is used only for a showcase
