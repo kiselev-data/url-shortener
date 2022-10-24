@@ -17,13 +17,16 @@
 <br>
 <!-- the result of the search will be rendered inside this div -->
 <div id="result">
-    <a id="link_result"></a><br>
-    <a id="link_result_short"></a>
+    Your short URL: <a id="link_result"></a><br><br>
+</div>
+<div id="result_2">
+    Your short URL for nerds: <a id="link_result_short"></a><br><br>
 </div>
 <div>
     <br>
     <a href="/api/v1/urls">View history</a><br>
 </div>
+
 <script>
 $("#submitButton").keyup(function(event) {
     if (event.keyCode === 13) {
