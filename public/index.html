@@ -11,15 +11,23 @@
 <h1>URL Shortener Service</h1>
 <h2>Enter your URL:</h2>
 <form action="/api/v1/urls" id="searchForm">
-    <input type="text" name="longUrl" placeholder="Enter your URL..."/>
-    <input type="submit" value="Convert">
+    <input type="text" style="width:90%" name="longUrl" placeholder="Enter your URL..."/>
+    <input id="submitButton" type="submit" style="width:8%" value="Convert">
 </form>
 <br>
 <!-- the result of the search will be rendered inside this div -->
-<div id="result"> <a id="link_result"></a></div>
+<div id="result">
+    <a id="link_result"></a><br>
+    <a id="link_result_short"></a>
+
+</div>
 
 <script>
-
+$("#submitButton").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#submitButton").click();
+    }
+})
 
 $(function() {
 $('#searchForm').submit(function(event) {
@@ -40,10 +48,18 @@ $('#searchForm').submit(function(event) {
             traditional: true,
             success: function (data) {
                 var shortUrl = data.shortUrl;
+                var id = data.id;
+
                 var origin   = window.location.origin;
-                var resultUrl = origin + submit_url + "/" + shortUrl;
+                var resultUrl = origin + "/s/" + id;
                 $( "#link_result" ).empty().append( resultUrl );
                 $( "#link_result" ).attr("href", resultUrl );
+
+                var resultUrl2 = origin + "/s/yet_another_method/" + shortUrl;
+                $( "#link_result_short" ).empty().append( resultUrl2 );
+                $( "#link_result_short" ).attr("href", resultUrl2 );
+
+
             }
         });
 });

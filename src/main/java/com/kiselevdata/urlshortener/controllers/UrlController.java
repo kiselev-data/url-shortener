@@ -1,31 +1,43 @@
 package com.kiselevdata.urlshortener.controllers;
 
 import com.kiselevdata.urlshortener.models.Url;
-import com.kiselevdata.urlshortener.services.UrlShortenerService;
+import com.kiselevdata.urlshortener.repositories.UrlRepository;
+import com.kiselevdata.urlshortener.shorteningservices.UrlShortenerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/urls")
 public class UrlController {
-    private UrlShortenerService urlShortenerService;
+    private final UrlShortenerService urlShortenerService;
+    private final UrlRepository urlRepository;
 
     @Autowired
-    public UrlController(UrlShortenerService urlShortenerService) {
+    public UrlController(UrlShortenerService urlShortenerService,
+                         UrlRepository urlRepository) {
         this.urlShortenerService = urlShortenerService;
+        this.urlRepository = urlRepository;
     }
 
-
-    @GetMapping("/{url}")
-    public String short2long(@PathVariable("url") String shortUrl) {
-        return this.urlShortenerService.short2long(shortUrl);
+    @GetMapping
+    public List<Url> list() {
+        return this.urlRepository.findAll();
     }
+
+    @GetMapping("/{id}")
+    public Url get(@PathVariable("id") long id) {
+        return this.urlRepository.findById(id).get();
+    }
+
 
     @PostMapping
-    Url long2short(@RequestBody Url url) {
-        System.out.println( url);
+    @ResponseStatus(HttpStatus.CREATED)
+    public Url create(@RequestBody Url url) {
         String shortUrl = this.urlShortenerService.long2short(url.getLongUrl());
-        Url newurl = new Url(url.getLongUrl(), shortUrl);
-        return newurl;
+        url.setShortUrl(shortUrl);
+        return this.urlRepository.save(url);
     }
 }

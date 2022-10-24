@@ -1,4 +1,4 @@
-package com.kiselevdata.urlshortener.services;
+package com.kiselevdata.urlshortener.shorteningservices;
 
 public interface UrlShortenerService {
     String long2short(String url);

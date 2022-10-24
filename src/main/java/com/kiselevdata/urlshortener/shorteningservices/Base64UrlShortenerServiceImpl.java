@@ -1,4 +1,4 @@
-package com.kiselevdata.urlshortener.services;
+package com.kiselevdata.urlshortener.shorteningservices;
 
 import org.springframework.stereotype.Component;
 
@@ -6,6 +6,8 @@ import java.util.Base64;
 
 @Component("urlShortenerService")
 public class Base64UrlShortenerServiceImpl implements UrlShortenerService {
+
+
     @Override
     public String long2short(String url) {
         return Base64.getUrlEncoder().encodeToString(url.getBytes());
