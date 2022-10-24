@@ -18,7 +18,9 @@ public class Url {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(columnDefinition = "VARCHAR(1255)")
     private String longUrl;
+    @Column(columnDefinition = "VARCHAR(1255)")
     private String shortUrl;
 
 }

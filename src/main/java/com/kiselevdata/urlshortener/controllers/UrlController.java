@@ -38,6 +38,7 @@ public class UrlController {
     public Url create(@RequestBody Url url) {
         String shortUrl = this.urlShortenerService.long2short(url.getLongUrl());
         url.setShortUrl(shortUrl);
+
         return this.urlRepository.save(url);
     }
 }
